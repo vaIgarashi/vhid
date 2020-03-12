@@ -1,0 +1,22 @@
+#include <ntddk.h>
+#include <wdf.h>
+#include <hidport.h>
+
+#define KEYBOARD_PRODUCT_ID 0xFEED
+#define KEYBOARD_VENDOR_ID 0xDEED
+#define KEYBOARD_DEVICE_VERSION 0x0101
+
+typedef UCHAR HID_REPORT_DESCRIPTOR, * PHID_REPORT_DESCRIPTOR;
+
+typedef struct _DEVICE_CONTEXT {
+    WDFDEVICE Device;
+    WDFQUEUE Queue;
+
+    HID_DEVICE_ATTRIBUTES HidDeviceAttributes;
+    PHID_DESCRIPTOR HidDescriptor;
+    PHID_REPORT_DESCRIPTOR ReportDescriptor;
+} DEVICE_CONTEXT, * PDEVICE_CONTEXT;
+
+WDF_DECLARE_CONTEXT_TYPE_WITH_NAME(DEVICE_CONTEXT, DeviceContext);
+
+NTSTATUS CreateDevice(_In_ WDFDRIVER Driver, _Inout_ PWDFDEVICE_INIT DeviceInit);
