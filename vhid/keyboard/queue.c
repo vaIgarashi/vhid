@@ -60,6 +60,11 @@ VOID QueueControl(_In_ WDFQUEUE Queue,
             &deviceContext->HidDeviceAttributes,
             sizeof(HID_DEVICE_ATTRIBUTES));
         break;
+    case IOCTL_HID_GET_REPORT_DESCRIPTOR:
+        status = RequestCopyFromBuffer(Request,
+            deviceContext->ReportDescriptor,
+            deviceContext->HidDescriptor->DescriptorList[0].wReportLength);
+        break;
     default:
         status = STATUS_NOT_IMPLEMENTED;
         break;

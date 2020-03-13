@@ -41,7 +41,6 @@ HID_DESCRIPTOR DefaultHidDescriptor = {
     }
 };
 
-
 NTSTATUS CreateDevice(_In_ WDFDRIVER Driver, _Inout_ PWDFDEVICE_INIT DeviceInit) {
     NTSTATUS status;
     PDEVICE_CONTEXT deviceContext;
@@ -49,11 +48,11 @@ NTSTATUS CreateDevice(_In_ WDFDRIVER Driver, _Inout_ PWDFDEVICE_INIT DeviceInit)
     WDFDEVICE device;
     PHID_DEVICE_ATTRIBUTES hidAttributes;
 
-	UNREFERENCED_PARAMETER(Driver);
+    UNREFERENCED_PARAMETER(Driver);
 
-	KdPrint(("Adding virtual keyboard device\n"));
+    KdPrint(("Adding virtual keyboard device\n"));
 
-	WdfFdoInitSetFilter(DeviceInit);
+    WdfFdoInitSetFilter(DeviceInit);
 
     WDF_OBJECT_ATTRIBUTES_INIT_CONTEXT_TYPE(
         &deviceAttributes,
@@ -87,5 +86,5 @@ NTSTATUS CreateDevice(_In_ WDFDRIVER Driver, _Inout_ PWDFDEVICE_INIT DeviceInit)
 
     status = CreateQueue(device, &deviceContext->Queue);
 
-	return status;
+    return status;
 }

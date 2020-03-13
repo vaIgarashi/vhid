@@ -15,5 +15,9 @@ NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject, _In_ PUNICODE_STRING Regi
         &config,
         WDF_NO_HANDLE);
 
+    if (!NT_SUCCESS(status)) {
+        KdPrint(("Failed to create virtual keyboard driver due error 0x%x\n", status));
+    }
+
     return status;
 }
