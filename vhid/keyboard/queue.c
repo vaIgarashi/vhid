@@ -47,25 +47,32 @@ VOID QueueControl(_In_ WDFQUEUE Queue,
     UNREFERENCED_PARAMETER(OutputBufferLength);
     UNREFERENCED_PARAMETER(InputBufferLength);
 
-    KdPrint(("Virtual keyboard received device control event of type %d\n", IoControlCode));
+    KdPrint(("Virtual keyboard received device control event\n"));
 
     switch (IoControlCode) {
     case IOCTL_HID_GET_DEVICE_DESCRIPTOR:
+        KdPrint(("Get device descriptor event\n"));
+
         status = RequestCopyFromBuffer(Request,
             &deviceContext->HidDescriptor,
             deviceContext->HidDescriptor->bLength);
         break;
     case IOCTL_HID_GET_DEVICE_ATTRIBUTES:
+        KdPrint(("Get device attrbites event\n"));
+
         status = RequestCopyFromBuffer(Request,
             &deviceContext->HidDeviceAttributes,
             sizeof(HID_DEVICE_ATTRIBUTES));
         break;
     case IOCTL_HID_GET_REPORT_DESCRIPTOR:
+        KdPrint(("Get report descriptor event\n"));
+
         status = RequestCopyFromBuffer(Request,
             deviceContext->ReportDescriptor,
             deviceContext->HidDescriptor->DescriptorList[0].wReportLength);
         break;
     default:
+        KdPrint(("Received unsupported event of type %d\n", IoControlCode));
         status = STATUS_NOT_IMPLEMENTED;
         break;
     }
